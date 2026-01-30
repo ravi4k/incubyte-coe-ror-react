@@ -26,6 +26,8 @@ This is a simple implementation of the String Calculator Kata, a coding exercise
   - Delimiters can be of any length (e.g., "//[***]\n1***2***3" should return 6).
 - Step 8
   - Allow multiple delimiters like this: “//[delim1][delim2]\n” for example “//[*][%]\n1*2%3” should return 6.
+- Step 9
+  - Handle multiple delimiters with length longer than one character (e.g., “//[***][%%]\n1***2%%3” should return 6).
 
 ## Structure
 - The project is structured with a main class `StringCalculator` that contains the method `add`.
