@@ -8,6 +8,11 @@ class StringCalculatorTest < Minitest::Test
     @calculator = StringCalculator.new
   end
 
+  def test_instance
+    assert_instance_of StringCalculator, @calculator
+    assert_respond_to @calculator, :add
+  end
+
   def test_add_numbers
     assert_equal @calculator.add('1,2,3'), 6
     assert_equal @calculator.add('10,20,30'), 60
