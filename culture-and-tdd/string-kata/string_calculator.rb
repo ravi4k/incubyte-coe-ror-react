@@ -11,6 +11,12 @@ class StringCalculator
   def extract_numbers(numbers_str)
     return [] if numbers_str.empty?
 
-    numbers_str.gsub("\n", ',').split(',').map(&:to_i)
+    delimiter = ','
+    if numbers_str.start_with?('//')
+      delimiter = numbers_str.split('//')[1][0]
+      numbers_str = numbers_str.split("\n")[1]
+    end
+
+    numbers_str.gsub("\n", delimiter).split(delimiter).map(&:to_i)
   end
 end
