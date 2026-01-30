@@ -26,8 +26,8 @@ class StringCalculator
   def split_delimiter_and_numbers(numbers_str)
     delimiter = DEFAULT_DELIMITER
     if numbers_str.start_with?(CUSTOM_DELIMITER_PREFIX)
-      delimiter = numbers_str.split(CUSTOM_DELIMITER_PREFIX)[1][0]
-      numbers_str = numbers_str.split("\n")[1]
+      delim_str, numbers_str = numbers_str.split("\n")
+      delimiter = delim_str.split(CUSTOM_DELIMITER_PREFIX)[1].gsub(/[\[\]]/, '')
     else
       numbers_str = numbers_str.gsub("\n", delimiter)
     end
