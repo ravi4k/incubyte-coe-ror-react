@@ -38,4 +38,8 @@ class StringCalculatorTest < Minitest::Test
     assert_raises(StandardError) { @calculator.add('1,-2,3') }
     assert_raises(StandardError) { @calculator.add("//;\n-1;2;-3") }
   end
+
+  def test_numbers_larger_than_1000_are_ignored
+    assert_equal @calculator.add('2,3,5,1001'), 10
+  end
 end

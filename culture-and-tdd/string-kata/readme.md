@@ -20,6 +20,8 @@ This is a simple implementation of the String Calculator Kata, a coding exercise
   - To change a delimiter, the beginning of the string will contain a separate line that looks like this: `//[delimiter]\n[numbers...]`.
 - Step 5
   - Negative numbers should throw an exception with the message "Negatives not allowed" followed by the negative numbers.
+- Step 6
+  - Numbers larger than 1000 should be ignored.
 
 ## Structure
 - The project is structured with a main class `StringCalculator` that contains the method `add`.
