@@ -20,4 +20,8 @@ class StringCalculatorTest < Minitest::Test
   def test_add_single_number
     assert_equal @calculator.add('5'), 5
   end
+
+  def test_handle_newlines
+    assert_equal @calculator.add("1\n2,3"), 6
+  end
 end
