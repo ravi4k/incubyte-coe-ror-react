@@ -12,4 +12,12 @@ class StringCalculatorTest < Minitest::Test
     assert_equal @calculator.add('1,2,3'), 6
     assert_equal @calculator.add('10,20,30'), 60
   end
+
+  def test_add_empty_string
+    assert_equal @calculator.add(''), 0
+  end
+
+  def test_add_single_number
+    assert_equal @calculator.add('5'), 5
+  end
 end
