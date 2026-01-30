@@ -20,7 +20,6 @@ class StringCalculator
     negative_numbers = number_list.select(&:negative?)
     raise StandardError, "Negatives not allowed: #{negative_numbers.join(', ')}" if negative_numbers.any?
 
-
     number_list.select { |num| num <= 1000 }
   end
 

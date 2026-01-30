@@ -22,6 +22,8 @@ This is a simple implementation of the String Calculator Kata, a coding exercise
   - Negative numbers should throw an exception with the message "Negatives not allowed" followed by the negative numbers.
 - Step 6
   - Numbers larger than 1000 should be ignored.
+- Step 7
+  - Delimiters can be of any length (e.g., "//[***]\n1***2***3" should return 6).
 
 ## Structure
 - The project is structured with a main class `StringCalculator` that contains the method `add`.
