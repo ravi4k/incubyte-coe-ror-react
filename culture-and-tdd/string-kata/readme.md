@@ -18,6 +18,8 @@ This is a simple implementation of the String Calculator Kata, a coding exercise
 - Step 4
   - Support different delimiters (e.g., "//;\n1;2" should return 3).
   - To change a delimiter, the beginning of the string will contain a separate line that looks like this: `//[delimiter]\n[numbers...]`.
+- Step 5
+  - Negative numbers should throw an exception with the message "Negatives not allowed" followed by the negative numbers.
 
 ## Structure
 - The project is structured with a main class `StringCalculator` that contains the method `add`.

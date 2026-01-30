@@ -33,4 +33,10 @@ class StringCalculatorTest < Minitest::Test
   def test_handle_multiple_newlines
     assert_equal @calculator.add("//;\n1;2;3;4"), 10
   end
+
+  def test_negative_numbers
+    # check error message for negative numbers
+    assert_raises(StandardError) { @calculator.add('1,-2,3') }
+    assert_raises(StandardError) { @calculator.add("//;\n-1;2;-3") }
+  end
 end
