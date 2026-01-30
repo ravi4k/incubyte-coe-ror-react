@@ -35,7 +35,6 @@ class StringCalculatorTest < Minitest::Test
   end
 
   def test_negative_numbers
-    # check error message for negative numbers
     assert_raises(StandardError) { @calculator.add('1,-2,3') }
     assert_raises(StandardError) { @calculator.add("//;\n-1;2;-3") }
   end

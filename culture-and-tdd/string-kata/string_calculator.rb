@@ -15,7 +15,12 @@ class StringCalculator
     return [] if numbers_str.empty?
 
     delimiter, numbers = split_delimiter_and_numbers(numbers_str)
-    numbers.split(delimiter).map(&:to_i)
+
+    number_list = numbers.split(delimiter).map(&:to_i)
+    negative_numbers = number_list.select(&:negative?)
+    raise StandardError, "Negatives not allowed: #{negative_numbers.join(', ')}" if negative_numbers.any?
+
+    number_list
   end
 
   def split_delimiter_and_numbers(numbers_str)
