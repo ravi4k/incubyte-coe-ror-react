@@ -15,6 +15,9 @@ This is a simple implementation of the String Calculator Kata, a coding exercise
   - Handle unknown amount of numbers.
 - Step 3
   - Handle new lines between numbers (e.g., "1\n2,3" should return 6).
+- Step 4
+  - Support different delimiters (e.g., "//;\n1;2" should return 3).
+  - To change a delimiter, the beginning of the string will contain a separate line that looks like this: `//[delimiter]\n[numbers...]`.
 
 ## Structure
 - The project is structured with a main class `StringCalculator` that contains the method `add`.

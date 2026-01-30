@@ -29,4 +29,8 @@ class StringCalculatorTest < Minitest::Test
   def test_handle_newlines
     assert_equal @calculator.add("1\n2,3"), 6
   end
+
+  def test_handle_multiple_newlines
+    assert_equal @calculator.add("//;\n1;2;3;4"), 10
+  end
 end
