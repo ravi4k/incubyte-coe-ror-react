@@ -1,0 +1,48 @@
+.card {
+  border-radius: 8px;
+  background-color: white;
+  overflow: hidden;
+}
+
+/* Variants */
+.card-default {
+  border: 1px solid #e5e7eb;
+}
+
+.card-outlined {
+  border: 2px solid #3b82f6;
+}
+
+.card-elevated {
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.card-title {
+  margin: 0;
+  padding: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+/* Sub-components */
+.card-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-footer {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
