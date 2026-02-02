@@ -1,8 +1,8 @@
-# React Fundamentals - Components & Props
+# React Fundamentals
 
 This module covers the core building blocks of React: components and props. By the end, you should be comfortable creating reusable functional components and passing data between them.
 
-## What is a React Component?
+## React Component
 
 A component is a reusable piece of UI. Think of it like a function that returns HTML (actually JSX). Instead of writing one giant HTML file, you break your UI into small, manageable pieces.
 
@@ -14,7 +14,7 @@ function Greeting() {
 
 That's it. That's a component.
 
-## JSX - HTML in JavaScript
+## JSX
 
 JSX lets you write HTML-like syntax in JavaScript. There are a few rules to remember:
 
@@ -45,7 +45,7 @@ function Card() {
 }
 ```
 
-## Props - Passing Data to Components
+## Props
 
 Props are how you pass data from a parent component to a child. They're like function arguments.
 
@@ -129,7 +129,7 @@ function DangerButton(props) {
 }
 ```
 
-## Thinking in React - Component Hierarchy
+## Component Hierarchy
 
 When building a UI:
 
@@ -152,7 +152,7 @@ App
 
 Start with the smallest components (leaves of the tree) and work your way up.
 
-## Functional Component Best Practices
+## Best Practices
 
 1. **Keep components small** - If it's doing too much, split it
 2. **One responsibility** - A component should do one thing well
