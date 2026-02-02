@@ -18,18 +18,11 @@ function App() {
     {
       title: 'Learn',
       links: [
-        { label: 'Documentation', href: '/docs' },
-        { label: 'Tutorials', href: '/tutorials' },
-        { label: 'Examples', href: '/examples' },
+        { label: 'Footer Label 1', href: '/link1' },
+        { label: 'Footer Label 2', href: '/link2' },
+        { label: 'Footer Label 3', href: '/link3' },
       ],
-    },
-    {
-      title: 'Community',
-      links: [
-        { label: 'GitHub', href: 'https://github.com' },
-        { label: 'Discord', href: 'https://discord.com' },
-      ],
-    },
+    }
   ];
 
   const handleNavClick = (href: string) => {
@@ -53,24 +46,12 @@ function App() {
           <h2>Component Showcase</h2>
           <p className="section-description">
             This app demonstrates reusable React components built with TypeScript.
-            Each component follows best practices: typed props, composition patterns,
-            and clean separation of concerns.
           </p>
         </section>
 
-        {/* Button Component Demo */}
         <section className="section">
           <h3>Button Component</h3>
           <p>Buttons with different variants and sizes:</p>
-          
-          <div className="demo-group">
-            <h4>Variants</h4>
-            <div className="button-row">
-              <Button variant="primary">Primary</Button>
-              <Button variant="secondary">Secondary</Button>
-              <Button variant="danger">Danger</Button>
-            </div>
-          </div>
 
           <div className="demo-group">
             <h4>Sizes</h4>
@@ -80,20 +61,12 @@ function App() {
               <Button size="large">Large</Button>
             </div>
           </div>
-
-          <div className="demo-group">
-            <h4>States</h4>
-            <div className="button-row">
-              <Button onClick={() => alert('Clicked!')}>Click Me</Button>
-              <Button disabled>Disabled</Button>
-            </div>
-          </div>
         </section>
 
         {/* Card Component Demo */}
         <section className="section">
           <h3>Card Component</h3>
-          <p>Cards with different variants and composition patterns:</p>
+          <p>Cards with different variants:</p>
 
           <div className="card-grid">
             {/* Simple Card with title prop */}
@@ -107,9 +80,6 @@ function App() {
             </Card>
 
             {/* Elevated Card */}
-            <Card title="Elevated Card" variant="elevated">
-              <p>This card uses a shadow for elevation.</p>
-            </Card>
           </div>
 
           <h4>Composition Pattern</h4>
@@ -131,30 +101,11 @@ function App() {
             </Card.Footer>
           </Card>
         </section>
-
-        {/* Props Demo */}
-        <section className="section">
-          <h3>Understanding Props</h3>
-          <Card variant="outlined">
-            <p>Props flow from parent to child (one-way data flow):</p>
-            <ul>
-              <li><strong>Button</strong> receives: variant, size, disabled, onClick, children</li>
-              <li><strong>Card</strong> receives: title, variant, className, children</li>
-              <li><strong>Header</strong> receives: title, logo, navItems, onNavClick</li>
-              <li><strong>Footer</strong> receives: copyright, sections, onLinkClick</li>
-            </ul>
-            <p>
-              The <code>children</code> prop is special - it represents whatever you put 
-              between the opening and closing tags of a component.
-            </p>
-          </Card>
-        </section>
       </main>
 
       {/* Footer Component Demo */}
       <Footer
         sections={footerSections}
-        copyright="© 2024 React Fundamentals Learning App"
         onLinkClick={(href) => console.log(`Footer link clicked: ${href}`)}
       />
     </div>

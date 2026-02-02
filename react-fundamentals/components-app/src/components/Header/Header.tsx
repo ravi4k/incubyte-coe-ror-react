@@ -29,24 +29,6 @@ function Header({ title, logo, navItems = [], onNavClick }: HeaderProps) {
         {logo && <div className="header-logo">{logo}</div>}
         <h1 className="header-title">{title}</h1>
       </div>
-      
-      {navItems.length > 0 && (
-        <nav className="header-nav">
-          <ul className="header-nav-list">
-            {navItems.map((item) => (
-              <li key={item.href} className="header-nav-item">
-                <a
-                  href={item.href}
-                  className={`header-nav-link ${item.isActive ? 'active' : ''}`}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
     </header>
   );
 }

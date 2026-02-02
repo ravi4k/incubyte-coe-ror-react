@@ -52,10 +52,6 @@ function Footer({ copyright, sections = [], onLinkClick }: FooterProps) {
           ))}
         </div>
       )}
-      
-      <div className="footer-bottom">
-        <p className="footer-copyright">{copyrightText}</p>
-      </div>
     </footer>
   );
 }
