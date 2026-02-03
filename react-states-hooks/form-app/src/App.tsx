@@ -25,9 +25,7 @@ function App() {
 
   // useEffect to set document title - demonstrates DOM side effect
   useEffect(() => {
-    document.title = contacts.length > 0 
-      ? `(${contacts.length}) Contact Manager` 
-      : 'Contact Manager';
+    document.title = 'Contact Manager';
     
     // Cleanup: reset title when component unmounts
     return () => {

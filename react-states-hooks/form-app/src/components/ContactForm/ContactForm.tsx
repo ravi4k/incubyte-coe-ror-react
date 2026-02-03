@@ -178,7 +178,7 @@ export function ContactForm({ onAddContact }: ContactFormProps) {
       {/* Success message - conditional rendering */}
       {submitSuccess && (
         <div className="success-message">
-          Contact added successfully!
+          Contact added!
         </div>
       )}
 
