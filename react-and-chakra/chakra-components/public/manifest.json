@@ -1,0 +1,9 @@
+{
+  "short_name": "Chakra Components",
+  "name": "Chakra UI Component Library",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#319795",
+  "background_color": "#ffffff"
+}
