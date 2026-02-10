@@ -99,23 +99,10 @@ RSpec.describe "CreateUser Mutation" do
       expect(user["name"]).to eq("Bob")
       expect(user["email"]).to eq("bob@example.com")
     end
-
-    it "returns no errors" do
-      result = MyAppSchema.execute(mutation, variables: variables)
-      errors = result.dig("data", "createUser", "errors")
-
-      expect(errors).to be_empty
-    end
   end
 
   context "with invalid input" do
     let(:variables) { { input: { name: "", email: "not-an-email" } } }
-
-    it "does not create a user" do
-      expect {
-        MyAppSchema.execute(mutation, variables: variables)
-      }.not_to change(User, :count)
-    end
 
     it "returns validation errors" do
       result = MyAppSchema.execute(mutation, variables: variables)
@@ -239,12 +226,6 @@ end
 - Logic you want to reuse across controllers/mutations/jobs
 - When your model or controller is getting too fat
 
-### When NOT to use them
-
-- Simple CRUD with no extra logic
-- One-liner operations
-- Don't create a service just for the sake of it
-
 ## Strong Migrations
 
 [strong_migrations](https://github.com/ankane/strong_migrations) catches unsafe migrations before they run. Database migrations can lock tables and cause downtime if not done carefully.
@@ -321,57 +302,6 @@ React App (Vite)  <--->  Rails API (GraphQL)
 ```
 
 The React app talks to Rails through a single `/graphql` endpoint. Apollo Client on the frontend manages queries, caching, and state. Rails handles the schema, resolvers, and database.
-
-### CORS setup on Rails
-
-```ruby
-# Gemfile
-gem "rack-cors"
-```
-
-```ruby
-# config/initializers/cors.rb
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins "http://localhost:5173" # Vite dev server
-    resource "*",
-      headers: :any,
-      methods: [:get, :post, :options]
-  end
-end
-```
-
-### Apollo Client setup
-
-```bash
-npm install @apollo/client graphql
-```
-
-```jsx
-// src/apollo-client.js
-import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: "http://localhost:3000/graphql",
-  }),
-  cache: new InMemoryCache(),
-});
-
-export default client;
-```
-
-```jsx
-// src/main.jsx
-import { ApolloProvider } from "@apollo/client";
-import client from "./apollo-client";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-);
-```
 
 ### Fetching data with useQuery
 
@@ -477,137 +407,3 @@ function DataComponent() {
   return <ItemList items={data.items} />;
 }
 ```
-
-Good patterns:
-- Show a spinner or skeleton while loading
-- Display user-friendly error messages
-- Provide a retry mechanism
-- Handle empty states (no data)
-- Use `errorPolicy: "all"` if you want partial data even when some fields error
-
-## FizzBuzz Kata (TDD in JavaScript)
-
-The FizzBuzz kata is a classic TDD exercise. The rules:
-- For multiples of 3, return "Fizz"
-- For multiples of 5, return "Buzz"
-- For multiples of both 3 and 5, return "FizzBuzz"
-- For everything else, return the number as a string
-
-### TDD approach
-
-Write one test at a time. Make it pass. Refactor. Repeat.
-
-**Step 1** - Return the number as a string for normal numbers
-
-```javascript
-// fizzbuzz.test.js
-const fizzBuzz = require("./fizzbuzz");
-
-test("returns '1' for 1", () => {
-  expect(fizzBuzz(1)).toBe("1");
-});
-
-test("returns '2' for 2", () => {
-  expect(fizzBuzz(2)).toBe("2");
-});
-```
-
-```javascript
-// fizzbuzz.js
-function fizzBuzz(n) {
-  return String(n);
-}
-module.exports = fizzBuzz;
-```
-
-**Step 2** - Return "Fizz" for multiples of 3
-
-```javascript
-test("returns 'Fizz' for 3", () => {
-  expect(fizzBuzz(3)).toBe("Fizz");
-});
-
-test("returns 'Fizz' for 6", () => {
-  expect(fizzBuzz(6)).toBe("Fizz");
-});
-```
-
-```javascript
-function fizzBuzz(n) {
-  if (n % 3 === 0) return "Fizz";
-  return String(n);
-}
-```
-
-**Step 3** - Return "Buzz" for multiples of 5
-
-```javascript
-test("returns 'Buzz' for 5", () => {
-  expect(fizzBuzz(5)).toBe("Buzz");
-});
-
-test("returns 'Buzz' for 10", () => {
-  expect(fizzBuzz(10)).toBe("Buzz");
-});
-```
-
-```javascript
-function fizzBuzz(n) {
-  if (n % 3 === 0) return "Fizz";
-  if (n % 5 === 0) return "Buzz";
-  return String(n);
-}
-```
-
-**Step 4** - Return "FizzBuzz" for multiples of both
-
-```javascript
-test("returns 'FizzBuzz' for 15", () => {
-  expect(fizzBuzz(15)).toBe("FizzBuzz");
-});
-
-test("returns 'FizzBuzz' for 30", () => {
-  expect(fizzBuzz(30)).toBe("FizzBuzz");
-});
-```
-
-```javascript
-function fizzBuzz(n) {
-  if (n % 15 === 0) return "FizzBuzz";
-  if (n % 3 === 0) return "Fizz";
-  if (n % 5 === 0) return "Buzz";
-  return String(n);
-}
-module.exports = fizzBuzz;
-```
-
-The key discipline: don't write production code without a failing test first. Each step should be tiny.
-
----
-
-## Practice App
-
-The `fizzbuzz-kata/` folder contains a working example:
-- `fizzbuzz-api/` - Rails API with a GraphQL endpoint for FizzBuzz
-- `fizzbuzz-fe/` - React app with Apollo Client that calls the API
-
-### Running the apps
-
-**Backend:**
-
-```bash
-cd fizzbuzz-kata/fizzbuzz-api
-bundle install
-rails db:create db:migrate
-rails server -p 3000
-```
-
-**Frontend:**
-
-```bash
-cd fizzbuzz-kata/fizzbuzz-fe
-npm install
-npm run dev
-```
-
-Open http://localhost:5173 and try it out.

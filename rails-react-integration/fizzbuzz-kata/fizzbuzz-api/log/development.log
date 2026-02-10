@@ -32,3 +32,22 @@ Processing by GraphqlController#execute as JSON
 Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started POST "/graphql" for ::1 at 2026-02-10 15:37:38 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FizzbuzzApi'*/[0m
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 1}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 1}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 68ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 11.9ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:37:41 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 5}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 5}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:38:24 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 15}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 15}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
