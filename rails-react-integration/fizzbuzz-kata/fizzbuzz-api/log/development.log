@@ -1,0 +1,34 @@
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:20:30 +0530
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='FizzbuzzApi'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='FizzbuzzApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FizzbuzzApi'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/ravi/.rvm/gems/ruby-3.4.8/gems/railties-8.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/ravi/.rvm/gems/ruby-3.4.8/gems/railties-8.1.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 2.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:23:06 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 1}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 1}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 266ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 18.5ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:23:09 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 2}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 2}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:23:14 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 10}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 10}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/graphql" for ::1 at 2026-02-10 15:23:19 +0530
+Processing by GraphqlController#execute as JSON
+  Parameters: {"operationName" => "FizzbuzzRange", "variables" => {"n" => 100}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}", "graphql" => {"operationName" => "FizzbuzzRange", "variables" => {"n" => 100}, "extensions" => {"clientLibrary" => {"name" => "@apollo/client", "version" => "4.1.4"}}, "query" => "query FizzbuzzRange($n: Int!) {\n  fizzbuzzRange(n: $n)\n}"}}
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

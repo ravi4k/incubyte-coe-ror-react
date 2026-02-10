@@ -1,0 +1,142 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.form input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #1a1a1a;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.form button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: #646cff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #535bf2;
+}
+
+.form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #3a1c1c;
+  border: 1px solid #7a3333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  color: #f88;
+}
+
+.results h2 {
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 8px;
+  background: #2a2a2a;
+  border: 1px solid #333;
+}
+
+.cell .number {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.cell .value {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.cell.fizz {
+  background: #1a3a2a;
+  border-color: #2a6a4a;
+  color: #6fd99f;
+}
+
+.cell.buzz {
+  background: #1a2a3a;
+  border-color: #2a4a6a;
+  color: #6fb3d9;
+}
+
+.cell.fizzbuzz {
+  background: #3a2a1a;
+  border-color: #6a4a2a;
+  color: #d9a96f;
+}
+
+@media (prefers-color-scheme: light) {
+  .form input {
+    background: #fff;
+    border-color: #ccc;
+  }
+
+  .cell {
+    background: #f5f5f5;
+    border-color: #ddd;
+  }
+
+  .cell.fizz {
+    background: #e6f9ee;
+    border-color: #a3d9b8;
+    color: #2a7a4a;
+  }
+
+  .cell.buzz {
+    background: #e6f0f9;
+    border-color: #a3b8d9;
+    color: #2a4a7a;
+  }
+
+  .cell.fizzbuzz {
+    background: #f9f0e6;
+    border-color: #d9b8a3;
+    color: #7a4a2a;
+  }
+
+  .error {
+    background: #fee;
+    border-color: #daa;
+    color: #a33;
+  }
+}
