@@ -1,0 +1,965 @@
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Backend'*/[0m
+  [1m[35m (132.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "capstone_ecommerce_test" /*application='Backend'*/[0m
+  [1m[35m (87.9ms)[0m  [1m[35mCREATE DATABASE "capstone_ecommerce_test" ENCODING = 'unicode' /*application='Backend'*/[0m
+  [1m[35mSQL (11.6ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Backend'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cart_items" CASCADE /*application='Backend'*/[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "cart_items" ("id" bigserial primary key, "cart_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "product_id" bigint NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_cart_items_on_cart_id" ON "cart_items" ("cart_id") /*application='Backend'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_cart_items_on_product_id" ON "cart_items" ("product_id") /*application='Backend'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "carts" CASCADE /*application='Backend'*/[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "carts" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "products" CASCADE /*application='Backend'*/[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "products" ("id" bigserial primary key, "category" character varying, "created_at" timestamp(6) NOT NULL, "description" text, "image_url" character varying, "name" character varying, "price" decimal(10,2) NOT NULL, "stock_quantity" integer DEFAULT 0 NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "cart_items" ADD CONSTRAINT "fk_rails_6cdb1f0139"
+FOREIGN KEY ("cart_id")
+  REFERENCES "carts" ("id")
+ /*application='Backend'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "cart_items" ADD CONSTRAINT "fk_rails_681a180e84"
+FOREIGN KEY ("product_id")
+  REFERENCES "products" ("id")
+ /*application='Backend'*/[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260211104648) /*application='Backend'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20260211104647),
+(20260211104642); /*application='Backend'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-02-11 10:49:19.467939', '2026-02-11 10:49:19.467943') RETURNING "key" /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '65a72d960b42cee8a5dd75b446056c4689ff14d3', '2026-02-11 10:49:19.469277', '2026-02-11 10:49:19.469281') RETURNING "key" /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (4.0ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.522215', 'Molestiae voluptate quis. Ratione ullam eaque. Odio id dolore.', 'https://picsum.photos/seed/ux6lew/400/300', 'Intelligent Iron Hat', 25.0, 10, '2026-02-11 10:49:19.522215') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.9ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.531524', '2026-02-11 10:49:19.531524') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.3ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 AND "cart_items"."product_id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 1 AND "cart_items"."cart_id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Create (1.0ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (1, '2026-02-11 10:49:19.542050', 1, 2, '2026-02-11 10:49:19.542050') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 1 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 1 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:49:19.552808', 'Praesentium doloremque est. Et possimus aut. Velit saepe quasi.', 'https://picsum.photos/seed/yrd1wh/400/300', 'Small Granite Clock', 25.0, 10, '2026-02-11 10:49:19.552808') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.553824', '2026-02-11 10:49:19.553824') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 2 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.555866', '2026-02-11 10:49:19.555866') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.4ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 3 AND "cart_items"."product_id" = 2 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 2 AND "cart_items"."cart_id" = 3 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Create (0.4ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (3, '2026-02-11 10:49:19.566554', 2, 1, '2026-02-11 10:49:19.566554') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 3 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 3 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 3 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 2 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 3 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 2 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:49:19.585052', 'Occaecati nisi exercitationem. Nulla qui totam. In dolor deserunt.', 'https://picsum.photos/seed/u7t1l8/400/300', 'Mediocre Plastic Lamp', 25.0, 10, '2026-02-11 10:49:19.585052') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.586098', '2026-02-11 10:49:19.586098') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 3 AND "cart_items"."cart_id" = 4 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (4, '2026-02-11 10:49:19.587441', 3, 1, '2026-02-11 10:49:19.587441') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 3 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 4 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 4 AND "cart_items"."product_id" = 3 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 3 AND "cart_items"."id" != 3 AND "cart_items"."cart_id" = 4 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Update (0.4ms)[0m  [1m[33mUPDATE "cart_items" SET "quantity" = 4, "updated_at" = '2026-02-11 10:49:19.592577' WHERE "cart_items"."id" = 3 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 4 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 4 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 4 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 3 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.2ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 4 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 3 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.600178', 'Assumenda quis praesentium. Dolore doloremque sapiente. Aut ex voluptatem.', 'https://picsum.photos/seed/fnfu64/400/300', 'Enormous Linen Knife', 25.0, 10, '2026-02-11 10:49:19.600178') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.601130', '2026-02-11 10:49:19.601130') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.605772', 'Quis placeat eos. Minus recusandae et. Blanditiis temporibus repellat.', 'https://picsum.photos/seed/wnkq7y/400/300', 'Rustic Paper Car', 25.0, 10, '2026-02-11 10:49:19.605772') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.606481', '2026-02-11 10:49:19.606481') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 5 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:49:19.609203', 'Nihil ut rem. Sit vel suscipit. Quia alias vero.', 'https://picsum.photos/seed/ftzt66/400/300', 'Practical Copper Table', 25.0, 10, '2026-02-11 10:49:19.609203') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.610118', '2026-02-11 10:49:19.610118') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 6 AND "cart_items"."cart_id" = 7 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (7, '2026-02-11 10:49:19.611283', 6, 2, '2026-02-11 10:49:19.611283') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 7 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 7 AND "cart_items"."product_id" = 6 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Destroy (0.4ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 4 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 7 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 7 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 7 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:49:19.616712', 'Aut mollitia et. Omnis velit et. Est necessitatibus voluptatum.', 'https://picsum.photos/seed/qfeljl/400/300', 'Heavy Duty Silk Bench', 25.0, 10, '2026-02-11 10:49:19.616712') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.617498', '2026-02-11 10:49:19.617498') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 7 AND "cart_items"."cart_id" = 8 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (8, '2026-02-11 10:49:19.618560', 7, 2, '2026-02-11 10:49:19.618560') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:49:19.619394', 'Ut amet qui. Nihil sit quia. Illo sint quae.', 'https://picsum.photos/seed/jbw4gd/400/300', 'Fantastic Leather Plate', 341.89, 63, '2026-02-11 10:49:19.619394') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 8 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 8 AND "cart_items"."product_id" = 8 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:49:19.622168', 'Quas totam ratione. Laborum exercitationem illo. Et nisi repudiandae.', 'https://picsum.photos/seed/hrzki4/400/300', 'Durable Wooden Watch', 25.0, 10, '2026-02-11 10:49:19.622168') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.622857', '2026-02-11 10:49:19.622857') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 9 AND "cart_items"."cart_id" = 9 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (9, '2026-02-11 10:49:19.624096', 9, 2, '2026-02-11 10:49:19.624096') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 9 AND "cart_items"."product_id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 9 AND "cart_items"."id" != 6 AND "cart_items"."cart_id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Update (0.2ms)[0m  [1m[33mUPDATE "cart_items" SET "quantity" = 5, "updated_at" = '2026-02-11 10:49:19.627123' WHERE "cart_items"."id" = 6 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 9 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 9 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:49:19.631259', 'Et odit voluptas. Natus minus voluptas. Est quia similique.', 'https://picsum.photos/seed/g2i6y4/400/300', 'Lightweight Wooden Pants', 25.0, 10, '2026-02-11 10:49:19.631259') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.632124', '2026-02-11 10:49:19.632124') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 10 AND "cart_items"."cart_id" = 10 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (10, '2026-02-11 10:49:19.633514', 10, 2, '2026-02-11 10:49:19.633514') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 10 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 10 AND "cart_items"."product_id" = 10 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Destroy (0.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 7 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 10 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 10 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 10 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.638392', 'Reprehenderit aspernatur tempore. Amet nemo temporibus. Nam voluptatem dolor.', 'https://picsum.photos/seed/n3apjs/400/300', 'Lightweight Plastic Bottle', 25.0, 10, '2026-02-11 10:49:19.638392') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.639153', '2026-02-11 10:49:19.639153') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 11 AND "cart_items"."cart_id" = 11 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (11, '2026-02-11 10:49:19.640255', 11, 2, '2026-02-11 10:49:19.640255') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 11 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 11 AND "cart_items"."product_id" = 11 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:49:19.643408', 'Error quas quaerat. Rerum sint sunt. Qui exercitationem quas.', 'https://picsum.photos/seed/3dxbvg/400/300', 'Practical Cotton Hat', 25.0, 10, '2026-02-11 10:49:19.643408') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.643970', '2026-02-11 10:49:19.643970') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 12 AND "cart_items"."cart_id" = 12 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.1ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (12, '2026-02-11 10:49:19.644946', 12, 1, '2026-02-11 10:49:19.644946') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:49:19.645651', 'Voluptatem eius repudiandae. Quos occaecati non. Enim esse labore.', 'https://picsum.photos/seed/tkd4s8/400/300', 'Practical Marble Shoes', 28.9, 30, '2026-02-11 10:49:19.645651') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 13 AND "cart_items"."cart_id" = 12 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.1ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (12, '2026-02-11 10:49:19.646623', 13, 1, '2026-02-11 10:49:19.646623') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 12 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 12 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Destroy (0.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 9 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Destroy (0.1ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 10 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 12 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 12 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 12 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.651614', 'Hic voluptates adipisci. Ut quae qui. Earum qui ad.', 'https://picsum.photos/seed/5p1kc7/400/300', 'Enormous Copper Computer', 25.0, 10, '2026-02-11 10:49:19.651614') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.652311', '2026-02-11 10:49:19.652311') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.654704', 'Rerum quam et. Necessitatibus quis dolorum. Et nobis aut.', 'https://picsum.photos/seed/lw5vp4/400/300', 'Gaming Laptop', 999.99, 76, '2026-02-11 10:49:19.654704') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.655614', 'Et eos impedit. Blanditiis quaerat magni. Facere repudiandae cumque.', 'https://picsum.photos/seed/muz64m/400/300', 'Cotton Shirt', 29.99, 30, '2026-02-11 10:49:19.655614') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.656435', 'Totam aut tenetur. Ipsum aliquid sed. Dolore sit veniam.', 'https://picsum.photos/seed/m4un59/400/300', 'Smartphone', 699.99, 100, '2026-02-11 10:49:19.656435') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.660064', 'Temporibus sapiente aliquid. Commodi et nihil. Ut et unde.', 'https://picsum.photos/seed/5j9uae/400/300', 'Gaming Laptop', 999.99, 37, '2026-02-11 10:49:19.660064') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.661166', 'Perferendis autem illo. Recusandae corporis voluptatum. Praesentium consequatur enim.', 'https://picsum.photos/seed/jdnw8h/400/300', 'Cotton Shirt', 29.99, 65, '2026-02-11 10:49:19.661166') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.662028', 'Cum sed laudantium. Quis qui modi. Ducimus ut fugiat.', 'https://picsum.photos/seed/ysbwq2/400/300', 'Smartphone', 699.99, 8, '2026-02-11 10:49:19.662028') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (1.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Laptop%') /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.666803', 'Cupiditate unde vel. Accusantium repellat voluptatibus. Expedita harum facilis.', 'https://picsum.photos/seed/bkqviq/400/300', 'Gaming Laptop', 999.99, 52, '2026-02-11 10:49:19.666803') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.667903', 'Quis enim aut. Sed voluptatibus qui. Modi quae libero.', 'https://picsum.photos/seed/cb7rja/400/300', 'Cotton Shirt', 29.99, 25, '2026-02-11 10:49:19.667903') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.668752', 'Quo incidunt minus. Optio velit dolore. Ipsam assumenda ut.', 'https://picsum.photos/seed/4rxcc4/400/300', 'Smartphone', 699.99, 85, '2026-02-11 10:49:19.668752') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."category" = 'Electronics' /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.671533', 'Quod qui qui. Ratione eos dolore. Necessitatibus dolor id.', 'https://picsum.photos/seed/bo4hqj/400/300', 'Gaming Laptop', 999.99, 20, '2026-02-11 10:49:19.671533') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.672403', 'Sint aut sunt. Maxime autem veritatis. Eaque voluptatem ut.', 'https://picsum.photos/seed/51mpt8/400/300', 'Cotton Shirt', 29.99, 35, '2026-02-11 10:49:19.672403') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.673122', 'Occaecati quo deserunt. Et et omnis. Saepe ea voluptatibus.', 'https://picsum.photos/seed/j2bkq4/400/300', 'Smartphone', 699.99, 97, '2026-02-11 10:49:19.673122') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.675520', 'Sint earum voluptatem. Non tenetur dicta. Aut autem similique.', 'https://picsum.photos/seed/uz93q8/400/300', 'Gaming Laptop', 999.99, 20, '2026-02-11 10:49:19.675520') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.676329', 'Qui sunt voluptates. Ipsam et expedita. Ipsa quis repellat.', 'https://picsum.photos/seed/x14hdy/400/300', 'Cotton Shirt', 29.99, 19, '2026-02-11 10:49:19.676329') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.677121', 'Officia qui consectetur. Perferendis eum vitae. Magnam et ipsa.', 'https://picsum.photos/seed/p2u5e6/400/300', 'Smartphone', 699.99, 74, '2026-02-11 10:49:19.677121') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 27 LIMIT 1 /*application='Backend',current_graphql_field='Query.product',current_graphql_operation='Product'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.679274', 'Molestiae saepe rem. Velit ab ut. Aut veritatis dolorem.', 'https://picsum.photos/seed/sdhziq/400/300', 'Gaming Laptop', 999.99, 59, '2026-02-11 10:49:19.679274') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.680394', 'Nemo ut quaerat. Ea assumenda doloribus. Voluptas aut aut.', 'https://picsum.photos/seed/kgd6id/400/300', 'Cotton Shirt', 29.99, 28, '2026-02-11 10:49:19.680394') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.5ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.688766', 'Dignissimos non numquam. Explicabo quasi ex. Autem qui iure.', 'https://picsum.photos/seed/g5u179/400/300', 'Smartphone', 699.99, 99, '2026-02-11 10:49:19.688766') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.4ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Query.product',current_graphql_operation='Product'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.692814', 'Repellendus recusandae sed. Esse illo voluptas. Non aut reiciendis.', 'https://picsum.photos/seed/llybur/400/300', 'Gaming Laptop', 999.99, 90, '2026-02-11 10:49:19.692814') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.693903', 'Sit et at. Voluptatem qui modi. Sed labore voluptatem.', 'https://picsum.photos/seed/q30xtq/400/300', 'Cotton Shirt', 29.99, 99, '2026-02-11 10:49:19.693903') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.694975', 'Sunt distinctio mollitia. Non aut maxime. Aut nostrum qui.', 'https://picsum.photos/seed/ks2u1h/400/300', 'Smartphone', 699.99, 45, '2026-02-11 10:49:19.694975') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Pluck (0.3ms)[0m  [1m[34mSELECT DISTINCT "products"."category" FROM "products" /*application='Backend',current_graphql_field='Query.categories'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" ORDER BY "cart_items"."id" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.705723', '2026-02-11 10:49:19.705723') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.1ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:49:19.706351', 'Error eaque earum. Inventore repellendus totam. Dolor optio magnam.', 'https://picsum.photos/seed/1wqxcw/400/300', 'Gorgeous Leather Lamp', 423.1, 63, '2026-02-11 10:49:19.706351') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (14, '2026-02-11 10:49:19.706653', 36, 1, '2026-02-11 10:49:19.706653') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 14 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 36 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 36 AND "cart_items"."cart_id" = 14 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 15 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 36 AND "cart_items"."cart_id" = 15 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.714623', '2026-02-11 10:49:19.714623') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:49:19.715779', 'Et esse totam. Quod est expedita. Unde qui error.', 'https://picsum.photos/seed/xmi3z0/400/300', 'Practical Bronze Clock', 10.0, 90, '2026-02-11 10:49:19.715779') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.716737', 'Quia aspernatur vel. Aut facere beatae. Excepturi autem omnis.', 'https://picsum.photos/seed/lqab0a/400/300', 'Practical Iron Hat', 25.5, 94, '2026-02-11 10:49:19.716737') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 37 AND "cart_items"."cart_id" = 15 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (15, '2026-02-11 10:49:19.718175', 37, 2, '2026-02-11 10:49:19.718175') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 38 AND "cart_items"."cart_id" = 15 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (15, '2026-02-11 10:49:19.719253', 38, 1, '2026-02-11 10:49:19.719253') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 15 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" IN (37, 38) /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.721376', '2026-02-11 10:49:19.721376') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 16 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:49:19.723098', '2026-02-11 10:49:19.723098') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:49:19.724390', 'Quae ullam est. Deserunt quos ut. Quia dolor aut.', 'https://picsum.photos/seed/zzak9i/400/300', 'Gorgeous Copper Pants', 391.3, 22, '2026-02-11 10:49:19.724390') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 39 AND "cart_items"."cart_id" = 17 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.3ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (17, '2026-02-11 10:49:19.725693', 39, 3, '2026-02-11 10:49:19.725693') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:49:19.726667', 'Molestiae facere minima. Occaecati repellendus facere. Et in harum.', 'https://picsum.photos/seed/dd04lm/400/300', 'Ergonomic Steel Clock', 114.46, 100, '2026-02-11 10:49:19.726667') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 40 AND "cart_items"."cart_id" = 17 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (17, '2026-02-11 10:49:19.727565', 40, 2, '2026-02-11 10:49:19.727565') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Sum (0.2ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 17 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.9ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.740293', 'Ut illo molestiae. Nisi dolorum qui. Libero est voluptates.', 'https://picsum.photos/seed/p9iyja/400/300', 'Gaming Laptop', 999.99, 37, '2026-02-11 10:49:19.740293') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.742017', 'Et quam enim. Quam velit officiis. Laborum est ut.', 'https://picsum.photos/seed/7hon1n/400/300', 'Cotton Shirt', 29.99, 59, '2026-02-11 10:49:19.742017') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.742921', 'Ea architecto doloremque. Odio provident assumenda. Eligendi voluptatem ab.', 'https://picsum.photos/seed/533u8c/400/300', 'Smartphone', 699.99, 19, '2026-02-11 10:49:19.742921') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "products" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.745386', 'Voluptas sapiente qui. Ut dignissimos a. Et nulla architecto.', 'https://picsum.photos/seed/z761d4/400/300', 'Gaming Laptop', 999.99, 56, '2026-02-11 10:49:19.745386') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.746331', 'Minus debitis aliquid. Commodi aliquam est. Veritatis optio eveniet.', 'https://picsum.photos/seed/jts09d/400/300', 'Cotton Shirt', 29.99, 41, '2026-02-11 10:49:19.746331') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.747252', 'Ducimus aut et. Qui libero molestiae. Qui eum a.', 'https://picsum.photos/seed/q11jwy/400/300', 'Smartphone', 699.99, 78, '2026-02-11 10:49:19.747252') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%laptop%') AND "products"."id" = 44 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%laptop%') AND "products"."id" = 45 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%laptop%') /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.749960', 'Dolore qui tempora. Cum perspiciatis odit. Corrupti est necessitatibus.', 'https://picsum.photos/seed/vrvfns/400/300', 'Gaming Laptop', 999.99, 48, '2026-02-11 10:49:19.749960') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.750891', 'Saepe et eaque. Laboriosam dolorem eum. Officiis ut at.', 'https://picsum.photos/seed/b3cp3v/400/300', 'Cotton Shirt', 29.99, 96, '2026-02-11 10:49:19.750891') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.751886', 'Est sit commodi. Dolores possimus delectus. Deleniti officiis et.', 'https://picsum.photos/seed/37embn/400/300', 'Smartphone', 699.99, 7, '2026-02-11 10:49:19.751886') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 47 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 49 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 48 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."category" = 'Electronics' /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.754584', 'Necessitatibus sapiente odit. Earum aut enim. Illum corporis sed.', 'https://picsum.photos/seed/h35tou/400/300', 'Gaming Laptop', 999.99, 45, '2026-02-11 10:49:19.754584') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.755727', 'At libero qui. Voluptatibus non cupiditate. Nesciunt magnam officiis.', 'https://picsum.photos/seed/drll5p/400/300', 'Cotton Shirt', 29.99, 17, '2026-02-11 10:49:19.755727') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.756676', 'Fugiat excepturi voluptatem. Ad harum recusandae. Omnis possimus natus.', 'https://picsum.photos/seed/pzt8pu/400/300', 'Smartphone', 699.99, 61, '2026-02-11 10:49:19.756676') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' AND "products"."id" = 50 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' AND "products"."id" = 52 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.759643', 'Possimus cumque assumenda. Odio est eos. Autem possimus voluptas.', 'https://picsum.photos/seed/teout3/400/300', 'Gaming Laptop', 999.99, 39, '2026-02-11 10:49:19.759643') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:49:19.760571', 'Ea rerum et. Delectus aperiam dolores. Maxime eaque illum.', 'https://picsum.photos/seed/j953id/400/300', 'Cotton Shirt', 29.99, 11, '2026-02-11 10:49:19.760571') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:49:19.761329', 'Quis accusamus quae. Laboriosam at dolor. Dolores iste id.', 'https://picsum.photos/seed/exmami/400/300', 'Smartphone', 699.99, 2, '2026-02-11 10:49:19.761329') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%nonexistent%') LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (1.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:58:19.272214', 'Enim rerum perferendis. Et accusantium quod. Modi optio nemo.', 'https://picsum.photos/seed/elwfx7/400/300', 'Sleek Iron Keyboard', 25.0, 10, '2026-02-11 10:58:19.272214') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.277250', '2026-02-11 10:58:19.277250') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.5ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 56 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.3ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 18 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.6ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 18 AND "cart_items"."product_id" = 56 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 56 AND "cart_items"."cart_id" = 18 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Create (0.5ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (18, '2026-02-11 10:58:19.285853', 56, 2, '2026-02-11 10:58:19.285853') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 18 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 18 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 18 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 56 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.2ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 18 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 56 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:58:19.292158', 'Sit at voluptatem. Est corporis tempora. Officia consequatur dolore.', 'https://picsum.photos/seed/odlta7/400/300', 'Small Rubber Knife', 25.0, 10, '2026-02-11 10:58:19.292158') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.293081', '2026-02-11 10:58:19.293081') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 57 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.294981', '2026-02-11 10:58:19.294981') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 20 AND "cart_items"."product_id" = 57 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 57 AND "cart_items"."cart_id" = 20 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Create (0.4ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (20, '2026-02-11 10:58:19.297037', 57, 1, '2026-02-11 10:58:19.297037') RETURNING "id" /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 20 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 20 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 20 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 57 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.2ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 20 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 57 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.301923', 'Sint veritatis placeat. Id non eligendi. Dolorem amet est.', 'https://picsum.photos/seed/522kpc/400/300', 'Small Plastic Table', 25.0, 10, '2026-02-11 10:58:19.301923') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.302883', '2026-02-11 10:58:19.302883') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 58 AND "cart_items"."cart_id" = 21 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.3ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (21, '2026-02-11 10:58:19.304206', 58, 1, '2026-02-11 10:58:19.304206') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 58 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 21 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 21 AND "cart_items"."product_id" = 58 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 58 AND "cart_items"."id" != 18 AND "cart_items"."cart_id" = 21 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Update (0.4ms)[0m  [1m[33mUPDATE "cart_items" SET "quantity" = 4, "updated_at" = '2026-02-11 10:58:19.310402' WHERE "cart_items"."id" = 18 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 21 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 21 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 21 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 58 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 21 /*application='Backend',current_graphql_field='Cart.totalItems',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 58 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:58:19.315227', 'Tempore corrupti quos. Maiores distinctio dolores. Temporibus sed ut.', 'https://picsum.photos/seed/rv6imk/400/300', 'Small Steel Hat', 25.0, 10, '2026-02-11 10:58:19.315227') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.316262', '2026-02-11 10:58:19.316262') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:58:19.320625', 'Omnis ab praesentium. Pariatur iure et. Natus vel sit.', 'https://picsum.photos/seed/m9s6hr/400/300', 'Lightweight Leather Clock', 25.0, 10, '2026-02-11 10:58:19.320625') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.321713', '2026-02-11 10:58:19.321713') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 60 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.addToCart',current_graphql_operation='AddToCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:58:19.325173', 'Est tempora ut. Modi in ab. Sequi deleniti sed.', 'https://picsum.photos/seed/hj3xx0/400/300', 'Incredible Silk Bag', 25.0, 10, '2026-02-11 10:58:19.325173') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.326014', '2026-02-11 10:58:19.326014') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 61 AND "cart_items"."cart_id" = 24 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.3ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (24, '2026-02-11 10:58:19.327825', 61, 2, '2026-02-11 10:58:19.327825') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 24 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 24 AND "cart_items"."product_id" = 61 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Destroy (0.3ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 19 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 24 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 24 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 24 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:58:19.334554', 'Dolores soluta eos. Velit facilis magni. Numquam magni doloremque.', 'https://picsum.photos/seed/a8wjya/400/300', 'Aerodynamic Leather Wallet', 25.0, 10, '2026-02-11 10:58:19.334554') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (2.1ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.335586', '2026-02-11 10:58:19.335586') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (11.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (26.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 62 AND "cart_items"."cart_id" = 25 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.3ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (25, '2026-02-11 10:58:19.400210', 62, 2, '2026-02-11 10:58:19.400210') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.5ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:58:19.401879', 'Qui at et. Necessitatibus rerum optio. Vel quae in.', 'https://picsum.photos/seed/xszty4/400/300', 'Aerodynamic Linen Computer', 214.77, 54, '2026-02-11 10:58:19.401879') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.3ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 25 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mCartItem Load (0.3ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 25 AND "cart_items"."product_id" = 63 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.removeFromCart',current_graphql_operation='RemoveFromCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.5ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:58:19.408653', 'Praesentium quidem dolorem. Laboriosam laudantium quis. Unde nesciunt omnis.', 'https://picsum.photos/seed/kmyf59/400/300', 'Incredible Granite Watch', 25.0, 10, '2026-02-11 10:58:19.408653') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.410044', '2026-02-11 10:58:19.410044') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 64 AND "cart_items"."cart_id" = 26 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.4ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (26, '2026-02-11 10:58:19.415730', 64, 2, '2026-02-11 10:58:19.415730') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.5ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 26 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.4ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 26 AND "cart_items"."product_id" = 64 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 64 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 64 AND "cart_items"."id" != 21 AND "cart_items"."cart_id" = 26 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Update (0.2ms)[0m  [1m[33mUPDATE "cart_items" SET "quantity" = 5, "updated_at" = '2026-02-11 10:58:19.430625' WHERE "cart_items"."id" = 21 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 26 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 26 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 26 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 64 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 64 LIMIT 1 /*application='Backend',current_graphql_field='CartItem.product',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.436613', 'Qui quis dolores. Quia sit et. Temporibus fugiat cupiditate.', 'https://picsum.photos/seed/tnd3df/400/300', 'Fantastic Iron Shirt', 25.0, 10, '2026-02-11 10:58:19.436613') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.437433', '2026-02-11 10:58:19.437433') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 65 AND "cart_items"."cart_id" = 27 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (27, '2026-02-11 10:58:19.438538', 65, 2, '2026-02-11 10:58:19.438538') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 27 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 27 AND "cart_items"."product_id" = 65 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Destroy (0.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 22 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 27 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 27 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 27 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:58:19.443135', 'Provident cumque voluptate. Autem dolore unde. Quo modi nihil.', 'https://picsum.photos/seed/mso1oa/400/300', 'Small Wool Shirt', 25.0, 10, '2026-02-11 10:58:19.443135') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.443853', '2026-02-11 10:58:19.443853') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 66 AND "cart_items"."cart_id" = 28 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.1ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (28, '2026-02-11 10:58:19.445136', 66, 2, '2026-02-11 10:58:19.445136') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 28 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 28 AND "cart_items"."product_id" = 66 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 66 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.updateCartItem',current_graphql_operation='UpdateCartItem'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (5.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.448899', 'Sit veniam laboriosam. Impedit quo sed. Quasi quos consequuntur.', 'https://picsum.photos/seed/d3s8pg/400/300', 'Synergistic Bronze Gloves', 25.0, 10, '2026-02-11 10:58:19.448899') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.455406', '2026-02-11 10:58:19.455406') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 67 AND "cart_items"."cart_id" = 29 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (29, '2026-02-11 10:58:19.456991', 67, 1, '2026-02-11 10:58:19.456991') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (6.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Home', '2026-02-11 10:58:19.460258', 'Similique aut ex. Quis eligendi repellendus. Quia enim sed.', 'https://picsum.photos/seed/s3czft/400/300', 'Lightweight Wool Chair', 339.04, 67, '2026-02-11 10:58:19.460258') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 68 AND "cart_items"."cart_id" = 29 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (29, '2026-02-11 10:58:19.467848', 68, 1, '2026-02-11 10:58:19.467848') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 29 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 29 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Destroy (0.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 24 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Destroy (0.1ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 25 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 29 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 29 /*application='Backend',current_graphql_field='Cart.cartItems',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 29 /*application='Backend',current_graphql_field='Cart.totalPrice',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.472503', 'Qui aliquam repellat. Et et id. Voluptates aut vel.', 'https://picsum.photos/seed/1vo9u2/400/300', 'Synergistic Cotton Bottle', 25.0, 10, '2026-02-11 10:58:19.472503') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.2ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.473289', '2026-02-11 10:58:19.473289') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Mutation.clearCart',current_graphql_operation='ClearCart'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.475543', 'Delectus eveniet ipsam. Laborum placeat similique. Ut dolor quisquam.', 'https://picsum.photos/seed/w8t1ks/400/300', 'Gaming Laptop', 999.99, 10, '2026-02-11 10:58:19.475543') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.476399', 'Praesentium rerum possimus. Consectetur mollitia error. Ratione provident fuga.', 'https://picsum.photos/seed/03ugoi/400/300', 'Cotton Shirt', 29.99, 73, '2026-02-11 10:58:19.476399') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.477235', 'Est eaque voluptatem. Repellat consectetur omnis. Omnis sit tempora.', 'https://picsum.photos/seed/0acb92/400/300', 'Smartphone', 699.99, 70, '2026-02-11 10:58:19.477235') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.480366', 'Accusamus illum est. Sit dolore fugiat. Voluptates vero quibusdam.', 'https://picsum.photos/seed/zce5iq/400/300', 'Gaming Laptop', 999.99, 33, '2026-02-11 10:58:19.480366') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.481779', 'Vitae sed ex. Autem recusandae nemo. Omnis distinctio et.', 'https://picsum.photos/seed/szv8v2/400/300', 'Cotton Shirt', 29.99, 79, '2026-02-11 10:58:19.481779') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.482797', 'Earum omnis ab. Molestiae voluptatem delectus. Enim voluptas quis.', 'https://picsum.photos/seed/kalmn7/400/300', 'Smartphone', 699.99, 30, '2026-02-11 10:58:19.482797') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Laptop%') /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.485952', 'Fuga voluptas cupiditate. Omnis nulla sed. Est et consequatur.', 'https://picsum.photos/seed/6t5q48/400/300', 'Gaming Laptop', 999.99, 24, '2026-02-11 10:58:19.485952') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.486971', 'Animi laboriosam eligendi. Delectus dolor facere. Facere est fugiat.', 'https://picsum.photos/seed/r7wwxt/400/300', 'Cotton Shirt', 29.99, 40, '2026-02-11 10:58:19.486971') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.488000', 'Enim dolor voluptatum. Reprehenderit sunt quasi. Eaque doloremque facilis.', 'https://picsum.photos/seed/wurpdd/400/300', 'Smartphone', 699.99, 94, '2026-02-11 10:58:19.488000') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."category" = 'Electronics' /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.490597', 'Et sit nulla. Iure qui accusantium. Molestias in earum.', 'https://picsum.photos/seed/suuuw2/400/300', 'Gaming Laptop', 999.99, 100, '2026-02-11 10:58:19.490597') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.491444', 'Qui eaque dolorem. Facilis porro nihil. Aut laborum ab.', 'https://picsum.photos/seed/zhlxw2/400/300', 'Cotton Shirt', 29.99, 70, '2026-02-11 10:58:19.491444') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.492324', 'Magnam consequatur incidunt. Eos esse cumque. Quae eligendi esse.', 'https://picsum.photos/seed/0ub2oh/400/300', 'Smartphone', 699.99, 64, '2026-02-11 10:58:19.492324') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' /*application='Backend',current_graphql_field='Query.products',current_graphql_operation='Products'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.495442', 'Nostrum pariatur repudiandae. A quo impedit. Quis non quidem.', 'https://picsum.photos/seed/lohulm/400/300', 'Gaming Laptop', 999.99, 30, '2026-02-11 10:58:19.495442') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.496832', 'Sunt dolor non. Autem dolorem iusto. Nesciunt recusandae repudiandae.', 'https://picsum.photos/seed/y61zrn/400/300', 'Cotton Shirt', 29.99, 79, '2026-02-11 10:58:19.496832') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.497790', 'Et illum rerum. Debitis nesciunt vitae. Quia omnis dolor.', 'https://picsum.photos/seed/igshix/400/300', 'Smartphone', 699.99, 74, '2026-02-11 10:58:19.497790') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 82 LIMIT 1 /*application='Backend',current_graphql_field='Query.product',current_graphql_operation='Product'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.500580', 'Facilis consequatur voluptatem. Ipsum maiores ratione. Natus consequatur rerum.', 'https://picsum.photos/seed/s2wqvn/400/300', 'Gaming Laptop', 999.99, 90, '2026-02-11 10:58:19.500580') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.501496', 'Mollitia optio est. Error quae quis. Natus quis illo.', 'https://picsum.photos/seed/vwfexo/400/300', 'Cotton Shirt', 29.99, 88, '2026-02-11 10:58:19.501496') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.502364', 'Sed aspernatur saepe. Qui eos alias. Ad officiis ex.', 'https://picsum.photos/seed/v4r9rc/400/300', 'Smartphone', 699.99, 50, '2026-02-11 10:58:19.502364') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 999999 LIMIT 1 /*application='Backend',current_graphql_field='Query.product',current_graphql_operation='Product'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.504423', 'Voluptatum ex voluptate. Unde enim repellendus. Atque provident est.', 'https://picsum.photos/seed/xcx7gb/400/300', 'Gaming Laptop', 999.99, 43, '2026-02-11 10:58:19.504423') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.505311', 'Iure distinctio molestiae. Et voluptatem sit. Veniam amet commodi.', 'https://picsum.photos/seed/smcq0k/400/300', 'Cotton Shirt', 29.99, 15, '2026-02-11 10:58:19.505311') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.506139', 'Laboriosam magni praesentium. At eum fuga. Nihil amet sunt.', 'https://picsum.photos/seed/ezlkdw/400/300', 'Smartphone', 699.99, 27, '2026-02-11 10:58:19.506139') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Pluck (0.2ms)[0m  [1m[34mSELECT DISTINCT "products"."category" FROM "products" /*application='Backend',current_graphql_field='Query.categories'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.4ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" ORDER BY "cart_items"."id" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.522892', '2026-02-11 10:58:19.522892') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.1ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:58:19.523745', 'Iste ut quia. Qui id dolores. Sed quos ipsam.', 'https://picsum.photos/seed/v1x4gt/400/300', 'Awesome Aluminum Bag', 208.7, 21, '2026-02-11 10:58:19.523745') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.1ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (31, '2026-02-11 10:58:19.524059', 91, 1, '2026-02-11 10:58:19.524059') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 31 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 91 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 91 AND "cart_items"."cart_id" = 31 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" /*application='Backend'*/[0m
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 32 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 91 AND "cart_items"."cart_id" = 32 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" IS NULL AND "cart_items"."cart_id" IS NULL LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.533624', '2026-02-11 10:58:19.533624') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:58:19.534798', 'Quos consequuntur quo. Reprehenderit ducimus vitae. Dolore delectus quam.', 'https://picsum.photos/seed/sncg09/400/300', 'Awesome Iron Gloves', 10.0, 63, '2026-02-11 10:58:19.534798') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.535857', 'Dignissimos labore sed. Optio numquam fuga. Iusto animi minima.', 'https://picsum.photos/seed/b5uajv/400/300', 'Mediocre Wool Bench', 25.5, 59, '2026-02-11 10:58:19.535857') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 92 AND "cart_items"."cart_id" = 32 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (32, '2026-02-11 10:58:19.536994', 92, 2, '2026-02-11 10:58:19.536994') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 93 AND "cart_items"."cart_id" = 32 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.3ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (32, '2026-02-11 10:58:19.538152', 93, 1, '2026-02-11 10:58:19.538152') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 32 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" IN (92, 93) /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.540462', '2026-02-11 10:58:19.540462') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Load (0.3ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 33 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCart Create (0.3ms)[0m  [1m[32mINSERT INTO "carts" ("created_at", "updated_at") VALUES ('2026-02-11 10:58:19.542385', '2026-02-11 10:58:19.542385') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Sports', '2026-02-11 10:58:19.543472', 'Est unde delectus. Placeat unde dolore. Omnis sit officia.', 'https://picsum.photos/seed/blzvjp/400/300', 'Durable Granite Pants', 140.58, 50, '2026-02-11 10:58:19.543472') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 94 AND "cart_items"."cart_id" = 34 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.1ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (34, '2026-02-11 10:58:19.544589', 94, 3, '2026-02-11 10:58:19.544589') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Books', '2026-02-11 10:58:19.545714', 'Maxime rem tenetur. Perferendis esse dolores. Voluptate dolorem necessitatibus.', 'https://picsum.photos/seed/mzqsgj/400/300', 'Fantastic Plastic Chair', 291.53, 22, '2026-02-11 10:58:19.545714') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."product_id" = 95 AND "cart_items"."cart_id" = 34 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mCartItem Create (0.2ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "created_at", "product_id", "quantity", "updated_at") VALUES (34, '2026-02-11 10:58:19.546921', 95, 2, '2026-02-11 10:58:19.546921') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mCartItem Sum (0.3ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 34 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.563355', 'Ipsa reprehenderit deserunt. Iusto enim modi. Officiis aspernatur neque.', 'https://picsum.photos/seed/m89w6t/400/300', 'Gaming Laptop', 999.99, 34, '2026-02-11 10:58:19.563355') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.2ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.564997', 'Et quis itaque. Id quam nesciunt. Ut recusandae autem.', 'https://picsum.photos/seed/tcsapu/400/300', 'Cotton Shirt', 29.99, 14, '2026-02-11 10:58:19.564997') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.565964', 'Ducimus quis animi. Consequuntur suscipit est. Est eaque eveniet.', 'https://picsum.photos/seed/jfur2y/400/300', 'Smartphone', 699.99, 91, '2026-02-11 10:58:19.565964') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "products" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.568341', 'Cupiditate aperiam quo. Nulla qui nam. Similique dignissimos aperiam.', 'https://picsum.photos/seed/e1c9ms/400/300', 'Gaming Laptop', 999.99, 75, '2026-02-11 10:58:19.568341') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.569477', 'Magni quae quo. Voluptates omnis neque. Aut nisi facilis.', 'https://picsum.photos/seed/dkdf9p/400/300', 'Cotton Shirt', 29.99, 50, '2026-02-11 10:58:19.569477') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.570400', 'Sunt consequuntur blanditiis. Distinctio voluptatem nihil. Cum quis quia.', 'https://picsum.photos/seed/79o9ac/400/300', 'Smartphone', 699.99, 92, '2026-02-11 10:58:19.570400') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%laptop%') AND "products"."id" = 99 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%laptop%') AND "products"."id" = 100 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%laptop%') /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.572835', 'A velit est. Aliquid impedit omnis. Numquam vel possimus.', 'https://picsum.photos/seed/sqbpd6/400/300', 'Gaming Laptop', 999.99, 37, '2026-02-11 10:58:19.572835') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.573830', 'Omnis porro odit. Aut non aliquam. Beatae et magni.', 'https://picsum.photos/seed/kk3yxq/400/300', 'Cotton Shirt', 29.99, 7, '2026-02-11 10:58:19.573830') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.574749', 'Reprehenderit non qui. Praesentium aperiam voluptatum. Maxime voluptates et.', 'https://picsum.photos/seed/hkp9ov/400/300', 'Smartphone', 699.99, 42, '2026-02-11 10:58:19.574749') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 102 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 104 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE "products"."category" = 'Electronics' AND "products"."id" = 103 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."category" = 'Electronics' /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.5ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.584480', 'Asperiores incidunt in. Tempora error dolor. Sit est tempore.', 'https://picsum.photos/seed/nee72f/400/300', 'Gaming Laptop', 999.99, 13, '2026-02-11 10:58:19.584480') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.585942', 'Temporibus magni sit. Repellendus et itaque. Aut modi velit.', 'https://picsum.photos/seed/91jngh/400/300', 'Cotton Shirt', 29.99, 94, '2026-02-11 10:58:19.585942') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.587248', 'Officiis suscipit voluptatibus. Qui omnis est. Ducimus ad labore.', 'https://picsum.photos/seed/24oual/400/300', 'Smartphone', 699.99, 56, '2026-02-11 10:58:19.587248') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' AND "products"."id" = 105 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' AND "products"."id" = 107 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE (name ILIKE '%Gaming%') AND "products"."category" = 'Electronics' /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.590259', 'Culpa commodi dolore. Earum soluta natus. Et voluptatem eos.', 'https://picsum.photos/seed/wi9s3n/400/300', 'Gaming Laptop', 999.99, 67, '2026-02-11 10:58:19.590259') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.3ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Clothing', '2026-02-11 10:58:19.591210', 'Autem accusamus et. Velit mollitia minima. Tenetur saepe ad.', 'https://picsum.photos/seed/ppqpe8/400/300', 'Cotton Shirt', 29.99, 33, '2026-02-11 10:58:19.591210') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.4ms)[0m  [1m[32mINSERT INTO "products" ("category", "created_at", "description", "image_url", "name", "price", "stock_quantity", "updated_at") VALUES ('Electronics', '2026-02-11 10:58:19.592285', 'Non tempora et. Itaque ea modi. Consequatur at molestiae.', 'https://picsum.photos/seed/mafrxt/400/300', 'Smartphone', 699.99, 41, '2026-02-11 10:58:19.592285') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1 /*application='Backend'*/[0m
+  [1m[36mProduct Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "products" WHERE (name ILIKE '%nonexistent%') LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK /*application='Backend'*/[0m

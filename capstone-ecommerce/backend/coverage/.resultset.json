@@ -1,0 +1,602 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/controllers/graphql_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/backend_schema.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/mutation_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_object.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_edge.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_connection.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_field.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_argument.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/mutations/cart/add_to_cart.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          5,
+          5,
+          null,
+          4,
+          1,
+          null,
+          null,
+          3,
+          3,
+          null,
+          3,
+          null,
+          3,
+          1,
+          null,
+          2,
+          null,
+          null,
+          3,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/mutations/base_mutation.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_input_object.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/cart_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/cart_item_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          3,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/product_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/mutations/cart/remove_from_cart.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          2,
+          2,
+          null,
+          2,
+          2,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/mutations/cart/update_cart_item.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          3,
+          3,
+          null,
+          3,
+          3,
+          null,
+          3,
+          1,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          2,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/mutations/cart/clear_cart.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          2,
+          2,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/query_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/node_type.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_interface.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/resolvers/base_resolver.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_enum.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_scalar.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/graphql/types/base_union.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/jobs/application_job.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/models/cart.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          15,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/models/cart_item.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/ravi/Projects/Incubyte/coe-ror-react/capstone-ecommerce/backend/app/models/product.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          6,
+          5,
+          null,
+          1,
+          9,
+          9,
+          9,
+          9,
+          null,
+          null
+        ]
+      }
+    },
+    "timestamp": 1770807499
+  }
+}

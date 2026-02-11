@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { ENV["USER"] } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { "" } %>
+
+development:
+  <<: *default
+  database: capstone_ecommerce_development
+
+test:
+  <<: *default
+  database: capstone_ecommerce_test
+
+production:
+  <<: *default
+  database: capstone_ecommerce_production
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>

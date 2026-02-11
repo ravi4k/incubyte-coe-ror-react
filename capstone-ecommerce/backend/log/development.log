@@ -1,0 +1,93 @@
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='Backend'*/[0m
+  [1m[35m (244.2ms)[0m  [1m[35mCREATE DATABASE "capstone_ecommerce_development" ENCODING = 'unicode' /*application='Backend'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Backend'*/[0m
+  [1m[35m (74.5ms)[0m  [1m[35mCREATE DATABASE "capstone_ecommerce_test" ENCODING = 'unicode' /*application='Backend'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Backend'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6021022412207915805) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-02-11 10:48:07.674697', '2026-02-11 10:48:07.674700') RETURNING "key" /*application='Backend'*/[0m
+Migrating to CreateProducts (20260211104642)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "products" ("id" bigserial primary key, "name" character varying, "description" text, "price" decimal(10,2) NOT NULL, "category" character varying, "image_url" character varying, "stock_quantity" integer DEFAULT 0 NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260211104642') RETURNING "version" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+Migrating to CreateCarts (20260211104647)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "carts" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260211104647') RETURNING "version" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+Migrating to CreateCartItems (20260211104648)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "cart_items" ("id" bigserial primary key, "cart_id" bigint NOT NULL, "product_id" bigint NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_6cdb1f0139"
+FOREIGN KEY ("cart_id")
+  REFERENCES "carts" ("id")
+, CONSTRAINT "fk_rails_681a180e84"
+FOREIGN KEY ("product_id")
+  REFERENCES "products" ("id")
+) /*application='Backend'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_cart_items_on_cart_id" ON "cart_items" ("cart_id") /*application='Backend'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_cart_items_on_product_id" ON "cart_items" ("product_id") /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260211104648') RETURNING "version" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT pg_advisory_unlock(6021022412207915805) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Backend'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Backend'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Backend'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mProduct Load (1.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Wireless Bluetooth Headphones' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Wireless Bluetooth Headphones', 'Premium noise-cancelling headphones with 30-hour battery life. Deep bass and crystal-clear treble for an immersive listening experience.', 79.99, 'Electronics', 'https://picsum.photos/seed/headphones/400/300', 45, '2026-02-11 10:49:47.348344', '2026-02-11 10:49:47.348344') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Mechanical Keyboard' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.8ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Mechanical Keyboard', 'RGB backlit mechanical keyboard with Cherry MX switches. Built for gamers and developers who demand the best typing experience.', 129.99, 'Electronics', 'https://picsum.photos/seed/keyboard/400/300', 30, '2026-02-11 10:49:47.352295', '2026-02-11 10:49:47.352295') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Ultrawide Monitor 34-inch' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Ultrawide Monitor 34-inch', '34-inch curved ultrawide monitor with QHD resolution. Perfect for productivity and gaming with a 144Hz refresh rate.', 449.99, 'Electronics', 'https://picsum.photos/seed/monitor/400/300', 15, '2026-02-11 10:49:47.354521', '2026-02-11 10:49:47.354521') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Running Shoes Pro' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Running Shoes Pro', 'Lightweight running shoes with responsive cushioning and breathable mesh upper. Designed for long-distance runners.', 119.99, 'Sports', 'https://picsum.photos/seed/shoes/400/300', 60, '2026-02-11 10:49:47.356826', '2026-02-11 10:49:47.356826') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Yoga Mat Premium' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (8.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Yoga Mat Premium', 'Extra thick non-slip yoga mat with carrying strap. Made from eco-friendly TPE material for comfort and durability.', 34.99, 'Sports', 'https://picsum.photos/seed/yogamat/400/300', 80, '2026-02-11 10:49:47.358947', '2026-02-11 10:49:47.358947') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Cotton Crew Neck T-Shirt' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Cotton Crew Neck T-Shirt', 'Classic fit crew neck tee made from 100% organic cotton. Soft, breathable, and perfect for everyday wear.', 24.99, 'Clothing', 'https://picsum.photos/seed/tshirt/400/300', 100, '2026-02-11 10:49:47.369849', '2026-02-11 10:49:47.369849') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Denim Jacket' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.8ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Denim Jacket', 'Classic denim jacket with a modern fit. Features button closure, chest pockets, and a comfortable stretch denim fabric.', 89.99, 'Clothing', 'https://picsum.photos/seed/jacket/400/300', 25, '2026-02-11 10:49:47.372542', '2026-02-11 10:49:47.372542') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'The Pragmatic Programmer' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.8ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('The Pragmatic Programmer', 'A classic software development book covering best practices, design principles, and practical advice for working programmers.', 42.99, 'Books', 'https://picsum.photos/seed/pragprog/400/300', 50, '2026-02-11 10:49:47.374825', '2026-02-11 10:49:47.374825') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Clean Code' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Clean Code', 'Robert C. Martin''s guide to writing readable, maintainable code. A must-read for every software developer.', 37.99, 'Books', 'https://picsum.photos/seed/cleancode/400/300', 40, '2026-02-11 10:49:47.377123', '2026-02-11 10:49:47.377123') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Cast Iron Skillet' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Cast Iron Skillet', 'Pre-seasoned 12-inch cast iron skillet. Even heat distribution and excellent heat retention for perfect searing.', 44.99, 'Home', 'https://picsum.photos/seed/skillet/400/300', 35, '2026-02-11 10:49:47.379253', '2026-02-11 10:49:47.379253') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'LED Desk Lamp' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.9ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('LED Desk Lamp', 'Adjustable LED desk lamp with multiple brightness levels and color temperatures. USB charging port built-in.', 39.99, 'Home', 'https://picsum.photos/seed/desklamp/400/300', 55, '2026-02-11 10:49:47.381677', '2026-02-11 10:49:47.381677') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."name" = 'Wireless Mouse' LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mProduct Create (0.7ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "price", "category", "image_url", "stock_quantity", "created_at", "updated_at") VALUES ('Wireless Mouse', 'Ergonomic wireless mouse with adjustable DPI settings. Silent click buttons and long battery life.', 29.99, 'Electronics', 'https://picsum.photos/seed/mouse/400/300', 70, '2026-02-11 10:49:47.384261', '2026-02-11 10:49:47.384261') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
+  [1m[36mProduct Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "products" /*application='Backend'*/[0m
+  [1m[36mCart Load (0.8ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."id" = 1 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Backend'*/[0m
+  [1m[36mCart Create (0.4ms)[0m  [1m[32mINSERT INTO "carts" ("id", "created_at", "updated_at") VALUES (1, '2026-02-11 10:49:47.390529', '2026-02-11 10:49:47.390529') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Backend'*/[0m
